@@ -13,6 +13,7 @@ module turn {
         /* Aggregate results */
         total:number = 0;
         failed:number = 0;
+        failures:string[] = [];
 
         /* Logger */
         log:turn.TestLogger = null;
@@ -26,19 +27,23 @@ module turn {
             for (var i = 0; i < this.tests.length; ++i) {
                 var test = this.tests[i];
                 var result:turn.TestResult = null;
-                this.log.info(': running: ' + test.label);
                 try {
                     result = test.execute(this.log);
                 }
                 catch (e) {
+                    this.log.error('Failed to run test case', e);
                     result = <turn.TestResult> {
                         tests: 1,
                         failed: 1,
-                        label: e.toString()
+                        label: e.toString(),
+                        failures: [],
                     };
                 }
                 this.total += result.tests;
                 this.failed += result.failed;
+                for (var j = 0; j < result.failures.length; ++j) {
+                    this.failures.push(result.failures[j]);
+                }
                 this.results.push(result);
             }
         }
@@ -50,16 +55,14 @@ module turn {
 
         /* Print a summary */
         report():void {
-            for (var i = 0; i < this.results.length; ++i) {
-                var r = this.results[i];
-                this.log.info(': ' + r.label + ' ' + (r.tests - r.failed) + '/' + r.tests + ' passed');
-            }
             this.log.info(':: ' + (this.total - this.failed) + '/' + this.total + ' passed');
             if (this.failed > 0) {
-                this.log.info(':: FAILED');
+                for (var i = 0; i < this.failures.length; ++i) {
+                    this.log.info(turn.format(':: {}failed{}: ' + this.failures[i], turn.RED, turn.RESET));
+                }
             }
             else {
-                this.log.info(':: PASSED');
+                this.log.info(turn.format(':: {}PASSED{}', turn.GREEN, turn.RESET));
             }
         }
     }
