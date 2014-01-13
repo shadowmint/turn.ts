@@ -26,7 +26,6 @@ module turn {
             for (var i = 0; i < this.tests.length; ++i) {
                 var test = this.tests[i];
                 var result:turn.TestResult = null;
-                this.log.info(': running: ' + test.label);
                 try {
                     result = test.execute(this.log);
                 }

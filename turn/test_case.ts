@@ -23,7 +23,7 @@ module turn {
                 if (key.substr(0, 4) == 'test') {
                     try {
                         ++total;
-                        var runner = this[key];
+                        log.info(': running: ' + this.label + '.' + key);
                         eval('this.'+key+'(this.log);');
                     }
                     catch (e) {

@@ -9,5 +9,11 @@ module turn {
                 throw new Error('Value not true');
             }
         }
+
+        isFalse(a:boolean):void {
+            if (a) {
+                throw new Error('Value not false');
+            }
+        }
     }
 }
