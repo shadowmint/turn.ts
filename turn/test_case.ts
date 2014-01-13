@@ -7,8 +7,13 @@ module turn {
         /* Label for this test */
         public label:string = '';
 
+        /* Asserter */
+        public assert:Assert = null;
+
         constructor(label:string) {
             this.label = label;
+            this.assert = new turn.Assert();
+            console.log(this);
         }
 
         public execute(log:turn.TestLogger):turn.TestResult {
@@ -19,7 +24,7 @@ module turn {
                     try {
                         ++total;
                         var runner = this[key];
-                        runner();
+                        eval('this.'+key+'(this.log);');
                     }
                     catch (e) {
                         ++failed;
