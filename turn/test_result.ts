@@ -6,5 +6,6 @@ module turn {
         label:string;
         tests:number;
         failed:number;
+        failures:string[];
     }
 }

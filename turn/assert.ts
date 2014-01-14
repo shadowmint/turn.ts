@@ -4,15 +4,21 @@ module turn {
     /* Assertion helper */
     export class Assert {
 
-        isTrue(a:boolean):void {
+        true(a:boolean):void {
             if (!a) {
-                throw new Error('Value not true');
+                throw new Error(a + ' !== true');
             }
         }
 
-        isFalse(a:boolean):void {
+        false(a:boolean):void {
             if (a) {
-                throw new Error('Value not false');
+                throw new Error(a + ' !== false');
+            }
+        }
+
+        equals(a:any, b:any):void {
+            if (a !== b) {
+                throw new Error(a + ' !== ' + b);
             }
         }
     }

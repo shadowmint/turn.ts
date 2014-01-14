@@ -6,11 +6,11 @@ class AddTests extends turn.TestCase {
     }
 
     test_works():void {
-        this.assert.isTrue(blah.worksAdd(3, 5) == 8);
+        this.assert.true(blah.worksAdd(3, 5) == 8);
     }
 
     test_fails():void {
-        this.assert.isFalse(blah.failsAdd(3, 5) == 8);
+        this.assert.false(blah.failsAdd(3, 5) == 8);
     }
 }
 runner.register(new AddTests());

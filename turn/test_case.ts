@@ -13,28 +13,31 @@ module turn {
         constructor(label:string) {
             this.label = label;
             this.assert = new turn.Assert();
-            console.log(this);
         }
 
         public execute(log:turn.TestLogger):turn.TestResult {
             var total = 0;
             var failed = 0;
+            var failures = [];
             for (var key in this) {
                 if (key.substr(0, 4) == 'test') {
+                    var tname = this.label + '.' + key;
                     try {
                         ++total;
-                        log.info(': running: ' + this.label + '.' + key);
                         eval('this.'+key+'(this.log);');
+                        log.info(': passed: ' + tname);
                     }
                     catch (e) {
                         ++failed;
-                        log.error('Failed', e);
+                        log.error(': failed: ' + tname, e);
+                        failures.push(tname);
                     }
                 }
             }
             return <turn.TestResult> {
                 tests: total,
                 failed: failed,
+                failures: failures,
                 label: this.label
             }
         }
