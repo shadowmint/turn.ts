@@ -21,5 +21,12 @@ module turn {
                 throw new Error(a + ' !== ' + b);
             }
         }
+
+        /* For floats, support fuzzy matching */
+        near(a:number, b:number, fuz=0.01):void {
+            if (Math.abs(a - b) > fuz) {
+                throw new Error(a + ' not within ' + fuz + ' of ' + b);
+            }
+        }
     }
 }

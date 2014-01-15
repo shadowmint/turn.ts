@@ -5,12 +5,13 @@ class AddTests extends turn.TestCase {
         super('AddTests');
     }
 
-    test_works():void {
-        this.assert.true(blah.worksAdd(3, 5) == 8);
+    test_works(a:turn.Assert, l:turn.TestLogger):void {
+        l.info('Thing');
+        a.true(blah.worksAdd(3, 5) == 8);
     }
 
-    test_fails():void {
-        this.assert.false(blah.failsAdd(3, 5) == 8);
+    test_fails(a:turn.Assert):void {
+        a.false(blah.failsAdd(3, 5) == 8);
     }
 }
 runner.register(new AddTests());

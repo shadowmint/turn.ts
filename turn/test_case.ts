@@ -24,7 +24,7 @@ module turn {
                     var tname = this.label + '.' + key;
                     try {
                         ++total;
-                        eval('this.'+key+'(this.log);');
+                        eval('this.'+key+'(this.assert, log);');
                         log.info(': passed: ' + tname);
                     }
                     catch (e) {
