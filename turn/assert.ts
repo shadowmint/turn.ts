@@ -22,6 +22,12 @@ module turn {
             }
         }
 
+        instanceof(a:any, b:any):void {
+            if (!(a instanceof b)) {
+                throw new Error(a + ' not instanceof ' + b);
+            }
+        }
+
         /* For floats, support fuzzy matching */
         near(a:number, b:number, fuz=0.01):void {
             if (Math.abs(a - b) > fuz) {
