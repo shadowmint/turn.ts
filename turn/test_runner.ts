@@ -31,7 +31,8 @@ module turn {
                     result = test.execute(this.log);
                 }
                 catch (e) {
-                    this.log.error('Failed to run test case', e);
+                    this.log('Failed to run test case');
+                    this.log(e);
                     result = <turn.TestResult> {
                         tests: 1,
                         failed: 1,
@@ -53,16 +54,25 @@ module turn {
             this.tests.push(t);
         }
 
+        /* Load a module of tests */
+        load(mod:any):void {
+            for (var key in mod) {
+                if (key.substr(0, 4).toLocaleLowerCase() == 'test') {
+                    this.register(new mod[key]());
+                }
+            }
+        }
+
         /* Print a summary */
         report():void {
-            this.log.info(':: ' + (this.total - this.failed) + '/' + this.total + ' passed');
+            this.log(':: ' + (this.total - this.failed) + '/' + this.total + ' passed');
             if (this.failed > 0) {
                 for (var i = 0; i < this.failures.length; ++i) {
-                    this.log.info(turn.format(':: {}failed{}: ' + this.failures[i], turn.RED, turn.RESET));
+                    this.log(turn.format(':: {}failed{}: ' + this.failures[i], turn.RED, turn.RESET));
                 }
             }
             else {
-                this.log.info(turn.format(':: {}PASSED{}', turn.GREEN, turn.RESET));
+                this.log(turn.format(':: {}PASSED{}', turn.GREEN, turn.RESET));
             }
         }
     }

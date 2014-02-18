@@ -25,11 +25,12 @@ module turn {
                     try {
                         ++total;
                         eval('this.'+key+'(this.assert, log);');
-                        log.info(': passed: ' + tname);
+                        log(': passed: ' + tname);
                     }
                     catch (e) {
                         ++failed;
-                        log.error(': failed: ' + tname, e);
+                        log(': failed: ' + tname);
+                        log(e);
                         failures.push(tname);
                     }
                 }
