@@ -58,7 +58,7 @@ module turn {
         load(mod:any):void {
             for (var key in mod) {
                 if (key.substr(0, 4).toLocaleLowerCase() == 'test') {
-                    this.register(new mod[key]());
+                    this.register(new mod[key](key));
                 }
             }
         }
